@@ -1,5 +1,6 @@
 import typing as tp
-from string import ascii_uppercase, ascii_lowercase
+from string import ascii_lowercase, ascii_uppercase
+
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
