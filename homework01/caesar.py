@@ -1,5 +1,5 @@
 import typing as tp
-
+from string import ascii_uppercase, ascii_lowercase
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
@@ -14,8 +14,20 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
+    alf_apper = ascii_uppercase + ascii_uppercase
+    alf_lower = ascii_lowercase + ascii_lowercase
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    for i in plaintext:
+        if i in alf_apper:
+            index = alf_apper.find(i)
+            index_new = index + shift
+            ciphertext += alf_apper[index_new]
+        elif i in alf_lower:
+            index = alf_lower.find(i)
+            index_new = index + shift
+            ciphertext += alf_lower[index_new]
+        else:
+            ciphertext += i
     return ciphertext
 
 
@@ -32,8 +44,20 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
+    alf_apper = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    alf_lower = alf_apper.lower()
     plaintext = ""
-    # PUT YOUR CODE HERE
+    for i in ciphertext:
+        if i in alf_apper:
+            index = alf_apper.rfind(i)
+            index_new = index - shift
+            plaintext += alf_apper[index_new]
+        elif i in alf_lower:
+            index = alf_lower.rfind(i)
+            index_new = index - shift
+            plaintext += alf_lower[index_new]
+        else:
+            plaintext += i
     return plaintext
 
 
@@ -44,3 +68,6 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     best_shift = 0
     # PUT YOUR CODE HERE
     return best_shift
+
+
+print(decrypt_caesar(encrypt_caesar("python")))
