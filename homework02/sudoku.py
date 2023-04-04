@@ -3,7 +3,7 @@ import typing as tp
 import random
 from pyparsing import empty
 
-T = tp.TypeVar("T")
+#T = tp.TypeVar("T")
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     """ Прочитать Судоку из указанного файла """
@@ -34,7 +34,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
+def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 
