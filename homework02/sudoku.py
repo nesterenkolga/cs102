@@ -34,7 +34,7 @@ def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
     """
     i = 0
     index = 0
-    res = []#финал матрица
+    res = [] # финал матрица
     while i != n:
         mas = []
         for g in range(n):
@@ -107,7 +107,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     """
     for y in range(len(grid)):
         for x in range(len(grid[y])):
-            if grid[y][x] == '.':
+            if grid[y][x] == ".":
                 return (y, x)
     return False
 
@@ -123,9 +123,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    row = ' '.join(get_row(grid, pos))
-    col = ' '.join(get_col(grid, pos))
-    block = ' '.join(get_block(grid, pos))
+    row = " ".join(get_row(grid, pos))
+    col = " ".join(get_col(grid, pos))
+    block = " ".join(get_block(grid, pos))
     values = set()
     for i in range(1, 10):
         if str(i) not in row and str(i) not in col and str(i) not in block:
