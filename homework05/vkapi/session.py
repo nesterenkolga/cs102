@@ -14,21 +14,30 @@ class Session:
     :param backoff_factor: Коэффициент экспоненциального нарастания задержки.
     """
 
-    import requests
+    def __init__(
+        self,
+        base_url: str,
+        timeout: float = 5.0,
+        max_retries: int = 3,
+        backoff_factor: float = 0.3,
+    ) -> None:
 
-    class HTTPClient:
-        def __init__(self, base_url: str, timeout: float = 5.0) -> None:
-            self.base_url = base_url
-            self.timeout = timeout
-            self.session = requests.Session()
+        self.base_url = base_url
+        self.timeout = timeout
+        self.session = requests.Session()
+        adapter = HTTPAdapter(
+            max_retries=Retry(
+                total=max_retries,
+                backoff_factor=backoff_factor,
+                status_forcelist=[500, 502, 503, 504],
+            )
+        )
+        self.session.mount("https://", adapter)
 
-        def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-            url = f"{self.base_url}/{url}"
-            response = self.session.get(url, params=kwargs, timeout=self.timeout)
-            return response
+    def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
+        response = self.session.get(f"{self.base_url}/{url}", params=kwargs, timeout=self.timeout)
+        return response
 
-        def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-            url = f"{self.base_url}/{url}"
-            response = self.session.post(url, data=kwargs, timeout=self.timeout)
-            return response
-
+    def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
+        response = self.session.post(f"{self.base_url}/{url}", data=kwargs, timeout=self.timeout)
+        return response
