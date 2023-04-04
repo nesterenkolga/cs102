@@ -1,7 +1,6 @@
 import pathlib
 import typing as tp
 import random
-from pyparsing import empty
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     """ Прочитать Судоку из указанного файла """
