@@ -34,7 +34,7 @@ def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
     """
     i = 0
     index = 0
-    res = [] # финал матрица
+    res = []  # финал матрица
     while i != n:
         mas = []
         for g in range(n):
