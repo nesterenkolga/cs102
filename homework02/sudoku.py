@@ -222,5 +222,5 @@ if __name__ == "__main__":
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)
-grid = read_sudoku('D:/proga/nesterenkolga/homework02/puzzle1.txt')
+grid = read_sudoku('D:/proga/cs102/homework02/puzzle1.txt')
 values = find_possible_values(grid, (0,2))
