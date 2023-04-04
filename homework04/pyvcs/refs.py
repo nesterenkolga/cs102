@@ -1,38 +1,43 @@
-import os
 import pathlib
 import typing as tp
 
 
 def update_ref(gitdir: pathlib.Path, ref: tp.Union[str, pathlib.Path], new_value: str) -> None:
-    with (gitdir / ref).open("w") as f:
+    refpath = gitdir / pathlib.Path(ref)
+    with refpath.open("w") as f:
         f.write(new_value)
 
 
 def symbolic_ref(gitdir: pathlib.Path, name: str, ref: str) -> None:
-    with (gitdir / "HEAD").open("w") as f:
-        f.write(name)
+    if ref_resolve(gitdir, ref) is None:
+        return None
+    with (gitdir / name).open("w") as f:
+        f.write(f"ref: {ref}")
 
 
 def ref_resolve(gitdir: pathlib.Path, refname: str) -> tp.Optional[str]:
-    if refname == "HEAD" and not is_detached(gitdir):
-        return resolve_head(gitdir)
-    if (gitdir / refname).exists():
-        with (gitdir / refname).open() as f:
-            return f.read().strip()
-    return None
+    if refname == "HEAD":
+        refname = get_ref(gitdir)
+    if not (gitdir / refname).exists():
+        return None
+    with open((gitdir / refname), "r") as f:
+        out = f.read()
+    return out
 
 
 def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
-    return ref_resolve(gitdir, get_ref(gitdir))
+    return ref_resolve(gitdir, "HEAD")
 
 
 def is_detached(gitdir: pathlib.Path) -> bool:
-    try:
-        return len(get_ref(gitdir)) == 40
-    except IndexError:
+    with (gitdir / "HEAD").open("r") as f:
+        chref = str(f.read())
+    if chref.find("ref") == -1:
         return True
+    return False
 
 
 def get_ref(gitdir: pathlib.Path) -> str:
-    with (gitdir / "HEAD").open() as f:
-        return f.read().split(" ")[1].strip()
+    with open((gitdir / "HEAD"), "r") as f:
+        gref = f.read()
+    return gref[gref.find(" ") + 1 :].strip()
