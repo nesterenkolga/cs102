@@ -1,5 +1,4 @@
-from typing import List
-import typing as tp
+from typing import List, Optional, Set, Tuple
 import random
 
 def read_sudoku(filename: str) -> List[List[str]]:
@@ -9,7 +8,7 @@ def read_sudoku(filename: str) -> List[List[str]]:
     return grid
 
 
-def display(grid: tp.List[tp.List[str]]) -> None:
+def display(grid: List[List[str]]) -> None:
     """Вывод Судоку"""
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
@@ -24,7 +23,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
+def group(values: List[str], n: int) -> List[List[str]]:
     """Сгруппировать значения values в список, состоящий из списков по n элементов
 
     >>> group([1,2,3,4], 2)
@@ -45,7 +44,7 @@ def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
     return res
 
 
-def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
+def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """Возвращает все значения для номера строки, указанной в pos
 
     >>> get_row([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -58,7 +57,7 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     return grid[pos[0]]
 
 
-def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
+def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """Возвращает все значения для номера столбца, указанного в pos
 
     >>> get_col([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -75,7 +74,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     return col
 
 
-def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
+def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """Возвращает все значения из квадрата, в который попадает позиция pos
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -95,7 +94,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return block
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
+def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
     """Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -112,7 +111,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     return False
 
 
-def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
+def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
     """Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -133,7 +132,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return values
 
 
-def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
     """Решение пазла, заданного в grid"""
     """Как решать Судоку?
         1. Найти свободную позицию
@@ -160,7 +159,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
             return solution
     return None
 
-def check_solution(solution: tp.List[tp.List[str]]) -> bool:
+def check_solution(solution: List[List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
     # TODO: Add doctests with bad puzzles
     if find_empty_positions(solution):
@@ -175,7 +174,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 
 
-def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
+def generate_sudoku(N: int) -> List[List[str]]:
     """Генерация судоку заполненного на N элементов
 
     >>> grid = generate_sudoku(40)
