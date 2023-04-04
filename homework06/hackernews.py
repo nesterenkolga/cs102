@@ -1,11 +1,11 @@
 import typing as tp
 
 from bottle import redirect, request, route, run, template
+from textutils import clean
 
 from bayes import NaiveBayesClassifier
 from db import News, engine, get_session, refresh_news, update_label
 from scraputils import get_news
-from textutils import clean
 
 weight = {"maybe": 1, "good": 0, "never": 2}
 
