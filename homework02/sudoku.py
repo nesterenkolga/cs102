@@ -3,14 +3,14 @@ import typing as tp
 import random
 
 def read_sudoku(filename: str) -> List[List[str]]:
-    """ Прочитать Судоку из указанного файла """
+    """Прочитать Судоку из указанного файла"""
     digits = [c for c in open(filename).read() if c in "123456789."]
     grid = group(digits, 9)
     return grid
 
 
 def display(grid: tp.List[tp.List[str]]) -> None:
-    """Вывод Судоку """
+    """Вывод Судоку"""
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
@@ -25,8 +25,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
 
 
 def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
-    """
-    Сгруппировать значения values в список, состоящий из списков по n элементов
+    """Сгруппировать значения values в список, состоящий из списков по n элементов
 
     >>> group([1,2,3,4], 2)
     [[1, 2], [3, 4]]
@@ -135,8 +134,8 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    """ Решение пазла, заданного в grid """
-    """ Как решать Судоку?
+    """Решение пазла, заданного в grid"""
+    """Как решать Судоку?
         1. Найти свободную позицию
         2. Найти все возможные значения, которые могут находиться на этой позиции
         3. Для каждого возможного значения:
@@ -162,7 +161,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     return None
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
-    """ Если решение solution верно, то вернуть True, в противном случае False """
+    """Если решение solution верно, то вернуть True, в противном случае False"""
     # TODO: Add doctests with bad puzzles
     if find_empty_positions(solution):
         return False
